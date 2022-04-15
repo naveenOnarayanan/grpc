@@ -74,6 +74,9 @@ def _gen_py_aspect_impl(target, context):
 
     arguments += get_proto_arguments(protos, context.genfiles_dir.path)
 
+    print(">>>>> I am running protoc for")
+    print(protos + includes.to_list())
+
     context.actions.run(
         inputs = protos + includes.to_list(),
         tools = tools,
