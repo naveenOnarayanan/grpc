@@ -134,7 +134,14 @@ def _generate_py_impl(context):
         for py_src in context.attr.deps[0][PyProtoInfo].generated_py_srcs:
             reimport_py_file = context.actions.declare_file(py_src.basename)
             py_sources.append(reimport_py_file)
-            import_line = "import importlib\n_imp=importlib.import_module('%s')\nfrom _imp import *" % py_src.short_path.replace("/", ".")[:-len(".py")]
+            import_line = """import importlib
+_imp=importlib.import_module('%s')
+_imp_dict = my_module.__dict__
+try:
+    _imp_import = _imp.__all__
+catch AttributeError:
+    _imp_import = [name for name in _imp_dict if not name.startswith('_')]
+globals().update({name: _imp_dict[name] for name in _imp_import})""" % py_src.short_path.replace("/", ".")[:-len(".py")]
 
             print(">>>>>>>>> Location = %s" % reimport_py_file)
             context.actions.write(reimport_py_file, import_line)
