@@ -139,7 +139,7 @@ _imp=importlib.import_module('%s')
 _imp_dict = _imp.__dict__
 try:
     _imp_import = _imp.__all__
-except AttributeError:
+except:
     _imp_import = [name for name in _imp_dict if not name.startswith('_')]
 globals().update({name: _imp_dict[name] for name in _imp_import})""" % py_src.short_path.replace("/", ".")[:-len(".py")]
 
