@@ -186,6 +186,7 @@ def get_staged_proto_file(label, context, source_file):
     else:
         # Current target and source_file are in different packages (most
         # probably even in different repositories)
+        print(">>>>>>> Trying to copy from %s to %s" % source_file.path, copied_proto.path)
         prefix = _make_prefix(source_file.owner)
         copied_proto = context.actions.declare_file(source_file.path[len(prefix):])
         context.actions.run_shell(
@@ -232,7 +233,9 @@ def get_proto_arguments(protos, genfiles_dir_path):
     arguments = []
     for proto in protos:
         strip_prefix_len = 0
+        print(">>>>>>>>>> Proto = %s" % proto)
         if is_in_virtual_imports(proto):
+            print(">>>>>>>>>> Proto is in virtual import = %s" % str(is_in_virtual_imports(proto)))
             incl_directory = get_include_directory(proto)
             if proto.path.startswith(incl_directory):
                 strip_prefix_len = len(incl_directory) + 1
