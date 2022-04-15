@@ -136,7 +136,7 @@ def _generate_py_impl(context):
             py_sources.append(reimport_py_file)
             import_line = """import importlib
 _imp=importlib.import_module('%s')
-_imp_dict = my_module.__dict__
+_imp_dict = _imp.__dict__
 try:
     _imp_import = _imp.__all__
 except AttributeError:
