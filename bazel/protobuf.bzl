@@ -186,9 +186,9 @@ def get_staged_proto_file(label, context, source_file):
     else:
         # Current target and source_file are in different packages (most
         # probably even in different repositories)
-        print(">>>>>>> Trying to copy from {} to {}".format(source_file.path, copied_proto.path))
         prefix = _make_prefix(source_file.owner)
         copied_proto = context.actions.declare_file(source_file.path[len(prefix):])
+        print(">>>>>>> Trying to copy from {} to {}".format(source_file.path, copied_proto.path))
         context.actions.run_shell(
             inputs = [source_file],
             outputs = [copied_proto],
