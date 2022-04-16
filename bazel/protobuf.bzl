@@ -298,7 +298,7 @@ def get_out_dir(protos, context):
         if is_in_virtual_imports(proto):
             at_least_one_virtual = True
         elif at_least_one_virtual:
-            fail("Proto sources must be either all virtual imports or all real")
+            fail("Proto sources must be either all x imports or all real")
     if at_least_one_virtual:
         out_dir = get_include_directory(protos[0])
         ws_root = protos[0].owner.workspace_root
@@ -329,4 +329,5 @@ def is_in_virtual_imports(source_file, virtual_folder = _VIRTUAL_IMPORTS):
     Returns:
         True if source_file is located under _virtual_imports, False otherwise.
     """
+    print(">>>>>> Source file is source? = {} and path = {}".format(str(source_file.is_source), source_file.path))
     return not source_file.is_source and virtual_folder in source_file.path
